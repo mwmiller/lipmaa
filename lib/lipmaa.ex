@@ -29,7 +29,7 @@ defmodule Lipmaa do
   defp g(n), do: g(n - val_for_k(@divk, index_for(@divk, n) - 1))
 
   # This returns where `n` does or would appear in the sorted list
-  def index_for(set, n) do
+  defp index_for(set, n) do
     set
     |> Enum.take_while(fn i -> i < n end)
     |> Enum.count()
