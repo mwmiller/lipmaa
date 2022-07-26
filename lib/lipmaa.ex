@@ -22,18 +22,12 @@ defmodule Lipmaa do
   """
   @spec linkseq(pos_integer) :: non_neg_integer | :error
   def linkseq(n) when not is_integer(n) or n <= 0 or n > @maxseq, do: :error
-  def linkseq(n) when n in @divk, do: n - val_for_k(@powk, index_for(@divk, n) - 1)
-  def linkseq(n), do: n - val_for_k(@divk, g(n))
+  def linkseq(n) when n in @divk, do: n - Enum.at(@powk, index_for(@divk, n) - 1)
+  def linkseq(n), do: n - Enum.at(@divk, g(n))
 
   defp g(n) when n in @divk, do: index_for(@divk, n)
-  defp g(n), do: g(n - val_for_k(@divk, index_for(@divk, n) - 1))
+  defp g(n), do: g(n - Enum.at(@divk, index_for(@divk, n) - 1))
 
   # This returns where `n` does or would appear in the sorted list
-  defp index_for(set, n) do
-    set
-    |> Enum.take_while(fn i -> i < n end)
-    |> Enum.count()
-  end
-
-  defp val_for_k(set, k), do: Enum.at(set, k)
+  defp index_for(set, n), do: set |> Enum.find_index(fn i -> i >= n end)
 end
