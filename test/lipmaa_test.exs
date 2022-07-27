@@ -52,4 +52,37 @@ defmodule LipmaaTest do
     assert Lipmaa.linkseq(40) == 13
     assert Lipmaa.linkseq(121) == 40
   end
+
+  test "cert_pool" do
+    assert Lipmaa.cert_pool(1) == [1]
+    assert Lipmaa.cert_pool(4) == [4, 1]
+    assert Lipmaa.cert_pool(11) == [13, 12, 11, 10, 9, 8, 4, 1]
+
+    assert Lipmaa.cert_pool(1_024) == [
+             1093,
+             1092,
+             1091,
+             1090,
+             1050,
+             1049,
+             1036,
+             1035,
+             1031,
+             1027,
+             1026,
+             1025,
+             1024,
+             1023,
+             1010,
+             970,
+             849,
+             728,
+             364,
+             121,
+             40,
+             13,
+             4,
+             1
+           ]
+  end
 end

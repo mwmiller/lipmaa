@@ -30,4 +30,36 @@ defmodule Lipmaa do
 
   # This returns where `n` does or would appear in the sorted list
   defp index_for(set, n), do: set |> Enum.find_index(fn i -> i >= n end)
+
+  @doc """
+  A list of the seqeunce numbers to be verified to ensure a consistent
+  forward-looking structure using sequence members.
+
+  ## Examples
+
+      iex> Lipmaa.cert_pool(1)
+      [1]
+
+      iex> Lipmaa.cert_pool(23)
+      [40, 39, 26, 25, 24, 23, 22, 21, 17, 13, 4, 1]
+  """
+  @spec cert_pool(pos_integer) :: [pos_integer]
+  def cert_pool(n) do
+    start = Enum.at(@divk, index_for(@divk, n))
+    back_to_one(start, n, [start])
+  end
+
+  defp back_to_one(1, _, acc), do: Enum.reverse(acc)
+
+  defp back_to_one(pos, via, acc) do
+    ll = Lipmaa.linkseq(pos)
+
+    next =
+      case pos > via and ll < via do
+        true -> pos - 1
+        false -> ll
+      end
+
+    back_to_one(next, via, [next | acc])
+  end
 end
