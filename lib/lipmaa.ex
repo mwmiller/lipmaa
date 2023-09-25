@@ -14,10 +14,10 @@ defmodule Lipmaa do
 
   ## Examples
 
-      iex> Lipmaa.linkseq(1)               
+      iex> Lipmaa.linkseq(1)
       0
 
-      iex> Lipmaa.linkseq(40)               
+      iex> Lipmaa.linkseq(40)
       13
   """
   @spec linkseq(pos_integer) :: non_neg_integer | :error
